@@ -75,6 +75,14 @@ class CopilotModal extends Component<Props, State> {
 
   handleLayoutChange = ({ nativeEvent: { layout } }) => {
     this.layout = layout;
+    if (
+      Platform.OS === 'android' &&
+      (this.state.containerVisible || this.props.visible) &&
+      (typeof (this.state.layout || {}).height === 'number' &&
+        (this.state.layout || {}).height !== layout.height)
+    ) {
+      this.animateMove();
+    }
   }
 
   measure(): Promise {
@@ -189,9 +197,13 @@ class CopilotModal extends Component<Props, State> {
   animateMove(obj = {}): void {
     return new Promise((resolve) => {
       this.setState(
-        { containerVisible: true },
+        {
+          containerVisible: true,
+          ...(typeof obj.width === 'number' ? { animateMoveObj: { ...obj } } : {}) // eslint-disable-line comma-dangle
+        },
         () => requestAnimationFrame(async () => {
-          await this._animateMove(obj);
+          const data = (typeof obj.width !== 'number') ? this.state.animateMoveObj : obj;
+          await this._animateMove(data);
           resolve();
         }),
       );
