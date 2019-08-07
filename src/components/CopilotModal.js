@@ -22,7 +22,8 @@ type Props = {
   animated: boolean,
   androidStatusBarVisible: boolean,
   backdropColor: string,
-  fullWidth: boolean
+  tooltipStyle: Object,
+  arrowStyle: Object,
 };
 
 type State = {
@@ -150,17 +151,11 @@ class CopilotModal extends Component<Props, State> {
     if (horizontalPosition === 'left') {
       tooltip.right = Math.max(layout.width - (obj.left + obj.width), 0);
       tooltip.right = tooltip.right === 0 ? tooltip.right + MARGIN : tooltip.right;
-      if(this.props.fullWidth){
-        tooltip.maxWidth = layout.width - MARGIN;
-      }
       tooltip.maxWidth = layout.width - tooltip.right - MARGIN;
       arrow.right = tooltip.right + MARGIN;
     } else {
       tooltip.left = Math.max(obj.left, 0);
       tooltip.left = tooltip.left === 0 ? tooltip.left + MARGIN : tooltip.left;
-      if(this.props.fullWidth){
-        tooltip.maxWidth = layout.width - MARGIN;
-      }
       tooltip.maxWidth = layout.width - tooltip.left - MARGIN;
       arrow.left = tooltip.left + MARGIN;
     }
@@ -262,6 +257,8 @@ class CopilotModal extends Component<Props, State> {
     const {
       tooltipComponent: TooltipComponent,
       stepNumberComponent: StepNumberComponent,
+      tooltipStyle,
+      arrowStyle,
     } = this.props;
 
     return [
@@ -282,8 +279,8 @@ class CopilotModal extends Component<Props, State> {
           currentStepNumber={this.props.currentStepNumber}
         />
       </Animated.View>,
-      <Animated.View key="arrow" style={[styles.arrow, this.state.arrow]} />,
-      <Animated.View key="tooltip" style={[styles.tooltip, this.state.tooltip]}>
+      <Animated.View key="arrow" style={[styles.arrow, this.state.arrow, arrowStyle]} />,
+      <Animated.View key="tooltip" style={[styles.tooltip, this.state.tooltip, tooltipStyle]}>
         <TooltipComponent
           isFirstStep={this.props.isFirstStep}
           isLastStep={this.props.isLastStep}

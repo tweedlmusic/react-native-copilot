@@ -36,7 +36,8 @@ const copilot = ({
   androidStatusBarVisible,
   backdropColor,
   verticalOffset = 0,
-  fullWidth
+  tooltipStyle,
+  arrowStyle,
 } = {}) =>
   (WrappedComponent) => {
     class Copilot extends Component<any, State> {
@@ -182,7 +183,8 @@ const copilot = ({
               next={this.next}
               prev={this.prev}
               stop={this.stop}
-              fullWidth={this.props.fullWidth}
+              tooltipStyle={tooltipStyle}
+              arrowStyle={arrowStyle}
               visible={this.state.visible}
               isFirstStep={this.isFirstStep()}
               isLastStep={this.isLastStep()}
