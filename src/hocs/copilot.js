@@ -36,6 +36,7 @@ const copilot = ({
   androidStatusBarVisible,
   backdropColor,
   verticalOffset = 0,
+  fullWidth
 } = {}) =>
   (WrappedComponent) => {
     class Copilot extends Component<any, State> {
