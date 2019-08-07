@@ -181,6 +181,7 @@ const copilot = ({
               next={this.next}
               prev={this.prev}
               stop={this.stop}
+              fullWidth={this.props.fullWidth}
               visible={this.state.visible}
               isFirstStep={this.isFirstStep()}
               isLastStep={this.isLastStep()}

@@ -21,7 +21,8 @@ type Props = {
   overlay: 'svg' | 'view',
   animated: boolean,
   androidStatusBarVisible: boolean,
-  backdropColor: string
+  backdropColor: string,
+  fullWidth: boolean
 };
 
 type State = {
@@ -149,11 +150,17 @@ class CopilotModal extends Component<Props, State> {
     if (horizontalPosition === 'left') {
       tooltip.right = Math.max(layout.width - (obj.left + obj.width), 0);
       tooltip.right = tooltip.right === 0 ? tooltip.right + MARGIN : tooltip.right;
+      if(this.props.fullWidth){
+        tooltip.maxWidth = layout.width - MARGIN;
+      }
       tooltip.maxWidth = layout.width - tooltip.right - MARGIN;
       arrow.right = tooltip.right + MARGIN;
     } else {
       tooltip.left = Math.max(obj.left, 0);
       tooltip.left = tooltip.left === 0 ? tooltip.left + MARGIN : tooltip.left;
+      if(this.props.fullWidth){
+        tooltip.maxWidth = layout.width - MARGIN;
+      }
       tooltip.maxWidth = layout.width - tooltip.left - MARGIN;
       arrow.left = tooltip.left + MARGIN;
     }
